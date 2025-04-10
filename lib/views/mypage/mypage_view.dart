@@ -13,7 +13,7 @@ class MyPageView extends StatelessWidget {
       body: const Center(
         child: Text('My Page View'),
       ),
-      bottomNavigationBar: const BottomNavBar(currentIndex: 5),
+      bottomNavigationBar: const BottomNavBar(currentIndex: 3),
     );
   }
 }

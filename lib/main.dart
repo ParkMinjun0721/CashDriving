@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'routes/app_routes.dart';
 
 void main() {
-  runApp(const CashDrivingApp());
+  runApp( ProviderScope(child: CashDrivingApp()));
 }
 
 class CashDrivingApp extends StatelessWidget {

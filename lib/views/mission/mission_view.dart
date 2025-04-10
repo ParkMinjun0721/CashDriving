@@ -13,7 +13,7 @@ class MissionView extends StatelessWidget {
       body: const Center(
         child: Text('Mission View'),
       ),
-      bottomNavigationBar: const BottomNavBar(currentIndex: 3),
+      bottomNavigationBar: const BottomNavBar(currentIndex: 2),
     );
   }
 }

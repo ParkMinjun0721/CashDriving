@@ -13,7 +13,7 @@ class ReportView extends StatelessWidget {
       body: const Center(
         child: Text('Report View'),
       ),
-      bottomNavigationBar: const BottomNavBar(currentIndex: 4),
+      bottomNavigationBar: const BottomNavBar(currentIndex: 3),
     );
   }
 }

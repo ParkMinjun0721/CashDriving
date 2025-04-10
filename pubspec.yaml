@@ -35,6 +35,23 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # 상태관리
+  flutter_riverpod: ^2.6.1 # riverpod, 상태 관리 플러그인 / provider의 상위버전
+
+  # Firebase
+  firebase_ui_auth: ^1.14.0
+  firebase_core: ^3.10.1
+  firebase_auth: ^5.4.1
+  firebase_storage: ^12.0.0
+  cloud_firestore: ^5.6.2
+
+  # Google Sign In
+  google_sign_in: ^6.2.1
+  google_sign_in_web: ^0.12.4
+
+  # Apple Login
+  sign_in_with_apple: ^6.1.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -73,17 +90,28 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: assets/fonts/PretendardVariable.ttf
+        - asset: assets/fonts/Pretendard-Thin.otf
+          weight: 100
+        - asset: assets/fonts/Pretendard-ExtraLight.otf
+          weight: 200
+        - asset: assets/fonts/Pretendard-Light.otf
+          weight: 300
+        - asset: assets/fonts/Pretendard-Regular.otf
+          weight: 400
+        - asset: assets/fonts/Pretendard-Medium.otf
+          weight: 500
+        - asset: assets/fonts/Pretendard-SemiBold.otf
+          weight: 600
+        - asset: assets/fonts/Pretendard-Bold.otf
+          weight: 700
+        - asset: assets/fonts/Pretendard-ExtraBold.otf
+          weight: 800
+        - asset: assets/fonts/Pretendard-Black.otf
+          weight: 900
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
