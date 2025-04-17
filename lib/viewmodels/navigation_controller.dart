@@ -4,6 +4,7 @@
 /// Created: 2024-12-28
 /// Last Modified: 2024-12-30 by 박민준
 
+import 'package:cash_driving/views/point_shop/point_shop_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../views/dashboard/dashboard_view.dart';
@@ -35,6 +36,9 @@ class NavigationController extends StateNotifier<int> {
         _navigateWithoutAnimation(context, '/mission'); // Community
         break;
       case 3:
+        _navigateWithoutAnimation(context, '/shop'); // Community
+        break;
+      case 4:
         _navigateWithoutAnimation(context, '/mypage'); // MyPage
         break;
     }
@@ -60,6 +64,8 @@ class NavigationController extends StateNotifier<int> {
         return MissionView();
       case '/dashboard':
         return DashboardView();
+      case '/shop':
+        return const PointShopView();
       case '/mypage':
         return const MyPageView();
       default:

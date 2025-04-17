@@ -1,71 +1,40 @@
+import 'package:cash_driving/theme/font.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../theme/box_shadow_styles.dart';
+import '../../theme/theme.dart';
+import '../../viewmodels/custom_colors_provider.dart';
 import '../../widgets/bottom_nav_bar.dart';
+import '../../widgets/custom_app_bar.dart';
 
-class MainView extends StatelessWidget {
+/// 점수 상태 관리 Provider
+final scoreProvider = StateProvider<int>((ref) => 85);
+
+class MainView extends ConsumerWidget {
   const MainView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final customColors = ref.watch(customColorsProvider);
+    final score = ref.watch(scoreProvider);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        title: const Text('Cash Driving'),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              '오늘도 안전하고 친환경적인 운전을 시작해볼까요?',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Container(
-              height: 160,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.green.shade100,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: const Center(
-                child: Text(
-                  '운전 시작하기 (지도/내비 UI)',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _MainMenuButton(
-                  icon: Icons.flag,
-                  label: '미션',
-                  onTap: () => Navigator.pushNamed(context, '/mission'),
-                ),
-                _MainMenuButton(
-                  icon: Icons.shopping_cart,
-                  label: '포인트샵',
-                  onTap: () => Navigator.pushNamed(context, '/shop'),
-                ),
-                _MainMenuButton(
-                  icon: Icons.analytics,
-                  label: '리포트',
-                  onTap: () => Navigator.pushNamed(context, '/report'),
-                ),
-                _MainMenuButton(
-                  icon: Icons.person,
-                  label: '마이페이지',
-                  onTap: () => Navigator.pushNamed(context, '/mypage'),
-                ),
-              ],
-            ),
-          ],
+      appBar: CustomAppBar_Main(backgroundColor: customColors.white),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 16),
+              _DrivingStartSection(customColors: customColors),
+              const SizedBox(height: 24),
+              _EcoScoreSection(score: score, customColors: customColors),
+              const SizedBox(height: 16),
+              _PointSection(customColors: customColors),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: const BottomNavBar(currentIndex: 0),
@@ -73,32 +42,99 @@ class MainView extends StatelessWidget {
   }
 }
 
-class _MainMenuButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
 
-  const _MainMenuButton({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
+class _DrivingStartSection extends StatelessWidget {
+  final CustomColors customColors;
+
+  const _DrivingStartSection({required this.customColors});
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
+    return Center(
+      child: Container(
+        width: 192,
+        height: 192,
+        decoration: BoxDecoration(
+          color: customColors.black,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.drive_eta, size: 30, color: customColors.white),
+            const SizedBox(height: 8),
+            Text("운전 시작", style: pretendardBold(context).copyWith(color: customColors.white)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _EcoScoreSection extends StatelessWidget {
+  final int score;
+  final CustomColors customColors;
+
+  const _EcoScoreSection({required this.score, required this.customColors});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: customColors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: BoxShadowStyles.shadow1(context),
+      ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircleAvatar(
-            radius: 28,
-            backgroundColor: Colors.green.shade300,
-            child: Icon(icon, color: Colors.white, size: 28),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("오늘의 에코드라이빙 점수", style: pretendardMedium(context)),
+              Text("$score점", style: pretendardBold(context).copyWith(fontSize: 20)),
+            ],
           ),
           const SizedBox(height: 8),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 14),
+          LinearProgressIndicator(
+            value: score / 100,
+            backgroundColor: customColors.neutral80,
+            color: customColors.success,
+            minHeight: 8,
+            borderRadius: BorderRadius.circular(4),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PointSection extends StatelessWidget {
+  final CustomColors customColors;
+
+  const _PointSection({required this.customColors});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 76,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: customColors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: BoxShadowStyles.shadow1(context),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("현재 보유 포인트", style: pretendardMedium(context)),
+          Row(
+            children: [
+              const Icon(Icons.attach_money_outlined),
+              Text("12,500", style: pretendardBold(context).copyWith(fontSize: 20)),
+            ],
           ),
         ],
       ),
