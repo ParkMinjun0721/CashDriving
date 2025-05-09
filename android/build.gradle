@@ -1,0 +1,31 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url = "https://devrepo.tmapadmin.com/repository/tmap-sdk-release/"
+        }
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
+
+subprojects {
+    configurations.all {
+        resolutionStrategy {
+            force 'com.google.protobuf:protobuf-javalite:3.23.3' // protobuf-javalite 강제 사용
+            exclude group: 'com.google.protobuf', module: 'protobuf-java' // protobuf-java 완전 제거
+            exclude group: 'com.google.protobuf', module: 'protobuf-java-util' // protobuf-java-util 제거
+        }
+    }
+}

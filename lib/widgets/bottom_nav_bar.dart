@@ -1,0 +1,32 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../viewmodels/navigation_controller.dart'; // 경로 맞게 조정
+
+class BottomNavBar extends ConsumerWidget {
+  final int currentIndex;
+  const BottomNavBar({super.key, required this.currentIndex});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final navController = ref.read(navigationProvider.notifier);
+
+    return BottomNavigationBar(
+      currentIndex: currentIndex,
+      onTap: (index) {
+        if (index != currentIndex) {
+          navController.navigateToIndex(context, index);
+        }
+      },
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: 'Dashboard'),
+        BottomNavigationBarItem(icon: Icon(Icons.flag), label: 'Mission'),
+        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Shop'),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'MyPage'),
+      ],
+      selectedItemColor: Colors.green,
+      unselectedItemColor: Colors.grey,
+      type: BottomNavigationBarType.fixed,
+    );
+  }
+}
