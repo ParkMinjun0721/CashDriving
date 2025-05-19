@@ -55,6 +55,13 @@ dependencies:
   # 그래프
   fl_chart: ^0.65.0
 
+  # 권한 요청
+  permission_handler: 10.2.0
+
+  # 위치 권한
+  geolocator: ^14.0.0
+
+  # TMap API
   tmap_ui_sdk:
     path: ./tmap_ui_sdk_local
 

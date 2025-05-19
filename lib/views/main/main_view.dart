@@ -1,6 +1,8 @@
 import 'package:cash_driving/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../models/config_car_model.dart';
+import '../../services/tmap_sdk_initializer.dart';
 import '../../theme/box_shadow_styles.dart';
 import '../../theme/theme.dart';
 import '../../viewmodels/custom_colors_provider.dart';
@@ -42,20 +44,21 @@ class MainView extends ConsumerWidget {
   }
 }
 
-class _DrivingStartSection extends StatelessWidget {
+class _DrivingStartSection extends ConsumerWidget {
   final CustomColors customColors;
-
   const _DrivingStartSection({required this.customColors});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isSdkInitialized = ref.watch(tmapSdkInitializedProvider);
+
     return GestureDetector(
       child: Center(
         child: Container(
           width: 192,
           height: 192,
           decoration: BoxDecoration(
-            color: customColors.black,
+            color: isSdkInitialized ? customColors.success : customColors.error,
             borderRadius: BorderRadius.circular(5),
           ),
           child: Column(
@@ -63,13 +66,34 @@ class _DrivingStartSection extends StatelessWidget {
             children: [
               Icon(Icons.drive_eta, size: 30, color: customColors.white),
               const SizedBox(height: 8),
-              Text("Start Driving", style: pretendardBold(context).copyWith(color: customColors.white)),
+              Text(
+                isSdkInitialized ? "Start Driving" : "SDK Not Initialized",
+                style: pretendardBold(context).copyWith(color: customColors.white),
+              ),
             ],
           ),
         ),
       ),
-      onTap: () => Navigator.pushNamed(context, '/driving'),
+      onTap: () async {
+        if (!isSdkInitialized) {
+          await _initializeTmapSdk(ref, context);
+        } else {
+          Navigator.pushNamed(context, '/driving');
+        }
+      },
     );
+  }
+
+  Future<void> _initializeTmapSdk(WidgetRef ref, BuildContext context) async {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Initializing Tmap SDK..."),
+        duration: Duration(seconds: 2),
+      ),
+    );
+
+    // 위치 권한 확인 및 SDK 초기화
+    await TmapSdkInitializer.initializeTmapSdk(context, ref);
   }
 }
 
