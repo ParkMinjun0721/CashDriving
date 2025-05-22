@@ -24,7 +24,7 @@ class BottomNavBar extends ConsumerWidget {
         BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Shop'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'MyPage'),
       ],
-      selectedItemColor: Colors.green,
+      selectedItemColor: Colors.lightBlue,
       unselectedItemColor: Colors.grey,
       type: BottomNavigationBarType.fixed,
     );

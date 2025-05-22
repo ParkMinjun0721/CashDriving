@@ -1,8 +1,10 @@
+// mission_view.dart
 // lib/views/mission/mission_view.dart
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../viewmodels/eco_mission_provider.dart';
+import '../../viewmodels/point_provider.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../theme/font.dart';
@@ -129,6 +131,9 @@ class MissionView extends ConsumerWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             ref.read(ecoMissionProvider.notifier).toggleMission(mission.id);
+                            if (!mission.isAccepted && isCompleted) {
+                              ref.read(pointProvider.notifier).earn(mission.point);
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: mission.isAccepted ? customColors.error : Colors.white,

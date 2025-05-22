@@ -1,6 +1,12 @@
+// point_shop_view.dart (with category-filtered product_provider integration)
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../theme/font.dart';
+import '../../theme/theme.dart';
+import '../../viewmodels/point_provider.dart';
+import '../../viewmodels/product_provider.dart';
+import '../../models/product.dart';
+import '../../models/purchased_product.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/custom_app_bar.dart';
 
@@ -52,7 +58,7 @@ class _PointShopSearchSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-        hintText: '🔍 Search products',
+        hintText: 'Search products',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -61,13 +67,22 @@ class _PointShopSearchSection extends StatelessWidget {
   }
 }
 
-class _PointShopTabSection extends StatelessWidget {
+class _PointShopTabSection extends ConsumerWidget {
   final TabController tabController;
 
   const _PointShopTabSection({required this.tabController});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final allProducts = ref.watch(couponProductProvider);
+
+    final couponProducts = allProducts
+        .where((p) => p.category == ProductCategory.coupon)
+        .toList();
+    final goodsProducts = allProducts
+        .where((p) => p.category == ProductCategory.goods)
+        .toList();
+
     return Expanded(
       child: Column(
         children: [
@@ -76,21 +91,21 @@ class _PointShopTabSection extends StatelessWidget {
             indicatorColor: Colors.black,
             labelColor: Colors.black,
             unselectedLabelColor: Colors.grey,
-            labelStyle: pretendardBold(context),
+            labelStyle: pretendardBold(context).copyWith(fontSize: 13),
             tabs: const [
               Tab(text: 'Coupon'),
               Tab(text: 'Goods'),
-              Tab(text: 'Cash Exchange'),
+              Tab(text: 'Exchange'),
             ],
           ),
           const SizedBox(height: 16),
           Expanded(
             child: TabBarView(
               controller: tabController,
-              children: const [
-                _ProductGridSection(),
-                Center(child: Text("Goods page coming soon")),
-                Center(child: Text("Cash exchange page coming soon")),
+              children: [
+                _ProductGridSection(products: couponProducts),
+                _ProductGridSection(products: goodsProducts),
+                const Center(child: Text("Cash exchange page coming soon")),
               ],
             ),
           ),
@@ -100,17 +115,16 @@ class _PointShopTabSection extends StatelessWidget {
   }
 }
 
-class _ProductGridSection extends StatelessWidget {
-  const _ProductGridSection();
+class _ProductGridSection extends ConsumerWidget {
+  final List<Product> products;
+  const _ProductGridSection({required this.products});
 
   @override
-  Widget build(BuildContext context) {
-    final products = [
-      {'name': 'Starbucks Americano', 'point': '1,000P'},
-      {'name': 'Gas Discount Coupon 3,000₩', 'point': '2,000P'},
-      {'name': 'Eco Bag', 'point': '3,000P'},
-      {'name': 'Tumbler', 'point': '5,000P'},
-    ];
+  Widget build(BuildContext context, WidgetRef ref) {
+    final customColors = Theme.of(context).extension<CustomColors>()!;
+    final point = ref.watch(pointProvider);
+    final pointController = ref.read(pointProvider.notifier);
+    final purchaseHistory = ref.read(purchaseHistoryProvider.notifier);
 
     return GridView.builder(
       padding: const EdgeInsets.only(top: 8),
@@ -123,6 +137,8 @@ class _ProductGridSection extends StatelessWidget {
       itemCount: products.length,
       itemBuilder: (context, index) {
         final product = products[index];
+        final bool canPurchase = point >= product.point;
+
         return Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -132,9 +148,10 @@ class _ProductGridSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: Container(
-                  color: Colors.grey.shade300,
-                  child: const Center(child: Text('Image')),
+                child: Image.network(
+                  product.imageUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => const Center(child: Text('Image')),
                 ),
               ),
               Padding(
@@ -142,21 +159,28 @@ class _ProductGridSection extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(product['name']!, style: pretendardMedium(context)),
+                    Text(product.name, style: pretendardMedium(context)),
                     const SizedBox(height: 4),
-                    Text(product['point']!, style: pretendardRegular(context)),
+                    Text('${product.point} P', style: pretendardRegular(context)),
                     const SizedBox(height: 8),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
+                          backgroundColor: canPurchase ? customColors.primary : Colors.grey,
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                         ),
-                        onPressed: () {},
-                        child: const Text('Exchange'),
+                        onPressed: canPurchase
+                            ? () {
+                          final success = pointController.purchase(product.point);
+                          if (success) {
+                            purchaseHistory.add(PurchasedProduct(name: product.name, point: product.point));
+                          }
+                        }
+                            : null,
+                        child: const Text('Purchase'),
                       ),
                     )
                   ],
@@ -169,3 +193,4 @@ class _ProductGridSection extends StatelessWidget {
     );
   }
 }
+

@@ -1,3 +1,4 @@
+// main_view.dart
 import 'package:cash_driving/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,10 +7,10 @@ import '../../services/tmap_sdk_initializer.dart';
 import '../../theme/box_shadow_styles.dart';
 import '../../theme/theme.dart';
 import '../../viewmodels/custom_colors_provider.dart';
+import '../../viewmodels/point_provider.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/custom_app_bar.dart';
 
-/// Provider for managing the eco-driving score state
 final scoreProvider = StateProvider<int>((ref) => 85);
 
 class MainView extends ConsumerWidget {
@@ -58,17 +59,24 @@ class _DrivingStartSection extends ConsumerWidget {
           width: 192,
           height: 192,
           decoration: BoxDecoration(
-            color: isSdkInitialized ? customColors.success : customColors.error,
-            borderRadius: BorderRadius.circular(5),
+            color: isSdkInitialized ? Colors.blue.shade600 : Colors.red.shade400,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              )
+            ],
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.drive_eta, size: 30, color: customColors.white),
-              const SizedBox(height: 8),
+              const Icon(Icons.drive_eta, size: 36, color: Colors.white),
+              const SizedBox(height: 10),
               Text(
                 isSdkInitialized ? "Start Driving" : "SDK Not Initialized",
-                style: pretendardBold(context).copyWith(color: customColors.white),
+                style: pretendardBold(context).copyWith(color: Colors.white),
               ),
             ],
           ),
@@ -91,8 +99,6 @@ class _DrivingStartSection extends ConsumerWidget {
         duration: Duration(seconds: 2),
       ),
     );
-
-    // 위치 권한 확인 및 SDK 초기화
     await TmapSdkInitializer.initializeTmapSdk(context, ref);
   }
 }
@@ -110,7 +116,7 @@ class _EcoScoreSection extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: customColors.white,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: BoxShadowStyles.shadow1(context),
       ),
       child: Column(
@@ -123,13 +129,15 @@ class _EcoScoreSection extends StatelessWidget {
               Text("$score pts", style: pretendardBold(context).copyWith(fontSize: 20)),
             ],
           ),
-          const SizedBox(height: 8),
-          LinearProgressIndicator(
-            value: score / 100,
-            backgroundColor: customColors.neutral80,
-            color: customColors.success,
-            minHeight: 8,
+          const SizedBox(height: 10),
+          ClipRRect(
             borderRadius: BorderRadius.circular(4),
+            child: LinearProgressIndicator(
+              value: score / 100,
+              backgroundColor: customColors.neutral80,
+              color: Colors.blue.shade600,
+              minHeight: 8,
+            ),
           ),
         ],
       ),
@@ -137,19 +145,21 @@ class _EcoScoreSection extends StatelessWidget {
   }
 }
 
-class _PointSection extends StatelessWidget {
+class _PointSection extends ConsumerWidget {
   final CustomColors customColors;
 
   const _PointSection({required this.customColors});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final point = ref.watch(pointProvider);
+
     return Container(
       height: 76,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: customColors.white,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: BoxShadowStyles.shadow1(context),
       ),
       child: Row(
@@ -158,8 +168,9 @@ class _PointSection extends StatelessWidget {
           Text("Current Points", style: pretendardMedium(context)),
           Row(
             children: [
-              const Icon(Icons.attach_money_outlined),
-              Text("12,500", style: pretendardBold(context).copyWith(fontSize: 20)),
+              const Icon(Icons.monetization_on_outlined, color: Colors.blue),
+              const SizedBox(width: 4),
+              Text("$point", style: pretendardBold(context).copyWith(fontSize: 20)),
             ],
           ),
         ],

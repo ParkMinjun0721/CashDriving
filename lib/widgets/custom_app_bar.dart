@@ -27,6 +27,8 @@ import '../../theme/theme.dart';
 import '../../theme/font.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:async';
+import 'package:flutter_riverpod/flutter_riverpod.dart';      // ← Consumer 사용
+import '../../viewmodels/point_provider.dart';                // ← pointProvider 사용
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////        1 Depth App Bar        //////////////////////////////////////
@@ -130,12 +132,16 @@ class CustomAppBar_PointShop extends StatelessWidget implements PreferredSizeWid
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 16),
-          child: Row(
-            children: [
-              const Icon(Icons.savings, size: 20),
-              const SizedBox(width: 4),
-              Text('2,450P', style: pretendardBold(context)),
-            ],
+          child: Consumer(
+            builder: (context, ref, _) {
+              final point = ref.watch(pointProvider);
+              return Row(
+                children: [
+                  const SizedBox(width: 4),
+                  Text('$point P', style: pretendardBold(context)),
+                ],
+              );
+            },
           ),
         ),
       ],

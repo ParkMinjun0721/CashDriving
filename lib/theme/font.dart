@@ -82,7 +82,7 @@ TextStyle pretendardMedium(BuildContext context) {
     return TextStyle(
         fontFamily: 'Pretendard',
         fontWeight: FontWeight.w500,
-        fontSize: 16,
+        fontSize: 12,
         color: Theme.of(context).colorScheme.onSurface, // Light: 검 Dark: 흰
     );
 }
@@ -91,7 +91,7 @@ TextStyle pretendardRegular(BuildContext context) {
     return TextStyle(
         fontFamily: 'Pretendard',
         fontWeight: FontWeight.w400,
-        fontSize: 16,
+        fontSize: 10,
         color: Theme.of(context).colorScheme.onSurface, // Light: 검 Dark: 흰
     );
 }
