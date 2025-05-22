@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "632076340870",
+    "project_id": "cash-driving",
+    "storage_bucket": "cash-driving.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632076340870:android:1b0488c373d2affbc8cb07",
+        "android_client_info": {
+          "package_name": "com.example.cashdriving"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbH0554I-s-EIiREGiKFbCQfvAEFctmB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
