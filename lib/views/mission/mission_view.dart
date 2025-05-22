@@ -36,7 +36,7 @@ class MissionView extends ConsumerWidget {
                       Text(
                         label,
                         style: pretendardBold(context).copyWith(
-                          fontSize: 16,
+                          fontSize: 13, // 글자 크기 축소
                           color: isSelected ? customColors.black : customColors.neutral60,
                         ),
                       ),
@@ -94,7 +94,7 @@ class MissionView extends ConsumerWidget {
                               maxLines: 1,
                             ),
                           ),
-                          const SizedBox(width: 8), // 텍스트와 포인트 간의 여백
+                          const SizedBox(width: 8),
                           Text('+${mission.point}P', style: pretendardBold(context)),
                         ],
                       ),
@@ -103,6 +103,7 @@ class MissionView extends ConsumerWidget {
                       // Description
                       Text(mission.description, style: body_small(context)),
                       const SizedBox(height: 12),
+
                       // Progress
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -121,6 +122,7 @@ class MissionView extends ConsumerWidget {
                         valueColor: AlwaysStoppedAnimation(customColors.primary),
                       ),
                       const SizedBox(height: 12),
+
                       // Action Button
                       Align(
                         alignment: Alignment.centerRight,
@@ -130,7 +132,9 @@ class MissionView extends ConsumerWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: mission.isAccepted ? customColors.error : Colors.white,
-                            backgroundColor: mission.isAccepted ? Colors.white : Colors.black,
+                            backgroundColor: mission.isAccepted
+                                ? Colors.white
+                                : customColors.primary, // ✅ 블루 계열 적용
                             side: mission.isAccepted
                                 ? BorderSide(color: customColors.error!)
                                 : BorderSide.none,

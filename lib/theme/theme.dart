@@ -1,34 +1,5 @@
-/// File: font.dart
-/// Purpose: Project의 전체 theme 관리
-/// Author: 박민준
-/// Created: 2024-12-28
-/// Last Modified: 2024-12-30 by 박민준
-
 import "package:flutter/material.dart";
 
-/*
-* 기존 방식
-  class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final customColors = Theme.of(context).extension<CustomColors>()!;
-  이렇게 class 내에서 사전 선언 후
-
-  color: customColors.primary,
-  이런 식으로 사용.
-  *
-* Riverpod 이용 방식
-  class MyHomePage extends ConsumerWidget {
-    @override
-    Widget build(BuildContext context, WidgetRef ref) {
-      final customColors = ref.watch(customColorsProvider); // CustomColors 가져오기
-
-  backgroundColor: customColors.primary, // Custom Primary Color 사용
-
-*
-*/
-
-// CustomColors 클래스 정의
 class CustomColors extends ThemeExtension<CustomColors> {
   final Color? primary;
   final Color? primary60;
@@ -49,7 +20,6 @@ class CustomColors extends ThemeExtension<CustomColors> {
   final Color? neutral0;
   final Color? black;
   final Color? white;
-
 
   CustomColors({
     required this.primary,
@@ -97,16 +67,16 @@ class CustomColors extends ThemeExtension<CustomColors> {
   }) {
     return CustomColors(
       primary: primary ?? this.primary,
-      primary60: primary ?? this.primary60,
-      primary40: primary ?? this.primary40,
-      primary20: primary ?? this.primary20,
-      primary10: primary ?? this.primary10,
+      primary60: primary60 ?? this.primary60,
+      primary40: primary40 ?? this.primary40,
+      primary20: primary20 ?? this.primary20,
+      primary10: primary10 ?? this.primary10,
       secondary: secondary ?? this.secondary,
       secondary60: secondary60 ?? this.secondary60,
       success: success ?? this.success,
-      success40: success ?? this.success40,
-      error: success ?? this.error,
-      error40: success ?? this.error40,
+      success40: success40 ?? this.success40,
+      error: error ?? this.error,
+      error40: error40 ?? this.error40,
       neutral100: neutral100 ?? this.neutral100,
       neutral90: neutral90 ?? this.neutral90,
       neutral80: neutral80 ?? this.neutral80,
@@ -120,9 +90,7 @@ class CustomColors extends ThemeExtension<CustomColors> {
 
   @override
   CustomColors lerp(ThemeExtension<CustomColors>? other, double t) {
-    if (other is! CustomColors) {
-      return this;
-    }
+    if (other is! CustomColors) return this;
     return CustomColors(
       primary: Color.lerp(primary, other.primary, t),
       primary60: Color.lerp(primary60, other.primary60, t),
@@ -147,32 +115,29 @@ class CustomColors extends ThemeExtension<CustomColors> {
   }
 }
 
-// CustomColors 클래스 및 기타 정의는 그대로 유지
-// 화면 베이스 흰색으로 설정 할 겸... 테마 정의 부분
-
 final ThemeData lightThemeGlobal = ThemeData(
   fontFamily: 'Pretendard',
   brightness: Brightness.light,
-  scaffoldBackgroundColor: Colors.white, // 바탕화면을 흰색으로 설정
+  scaffoldBackgroundColor: Colors.white,
   colorScheme: ColorScheme.light(
-    primary: Color(0xFF514FFF), // 기본 Primary 색상
-    secondary: Color(0xFFFFD95C), // 기본 Secondary 색상
-    background: Colors.white, // 배경 색상
-    surface: Colors.white, // 서피스(카드 등) 색상
-    onPrimary: Colors.white, // Primary 색상 위에 올려질 텍스트/아이콘 색상
-    onSecondary: Colors.black, // Secondary 색상 위에 올려질 텍스트/아이콘 색상
-    onBackground: Colors.black, // 배경색 위에 올려질 텍스트 색상
-    onSurface: Colors.black, // 서피스 색상 위에 올려질 텍스트 색상
+    primary: Color(0xFF2196F3),
+    secondary: Color(0xFFFFD95C),
+    background: Colors.white,
+    surface: Colors.white,
+    onPrimary: Colors.white,
+    onSecondary: Colors.black,
+    onBackground: Colors.black,
+    onSurface: Colors.black,
     error: Color(0xFFF05F42),
     errorContainer: Color(0xFFF05F42),
   ),
   extensions: <ThemeExtension>[
     CustomColors(
-      primary: Color(0xFF514FFF),
-      primary60: Color(0xFF8886FF),
-      primary40: Color(0xFFB9B9FF),
-      primary20: Color(0xFFD6D6FF),
-      primary10: Color(0xFFE7E7FD),
+      primary: Color(0xFF2196F3),
+      primary60: Color(0xFF64B5F6),
+      primary40: Color(0xFFBBDEFB),
+      primary20: Color(0xFFE3F2FD),
+      primary10: Color(0xFFF1F9FF),
       secondary: Color(0xFFFFD95C),
       secondary60: Color(0xFFFDE186),
       success: Color(0xFF3FA654),
@@ -194,26 +159,26 @@ final ThemeData lightThemeGlobal = ThemeData(
 final ThemeData darkThemeGlobal = ThemeData(
   fontFamily: 'Pretendard',
   brightness: Brightness.dark,
-  scaffoldBackgroundColor: Color(0xFF121212), // 다크 모드 배경 설정
+  scaffoldBackgroundColor: Color(0xFF121212),
   colorScheme: ColorScheme.dark(
-    primary: Color(0xFF514FFF), // 기본 Primary 색상
-    secondary: Color(0xFFFFD95C), // 기본 Secondary 색상
-    background: Color(0xFF121212), // 배경 색상
-    surface: Color(0xFF1E1E1E), // 서피스(카드 등) 색상
-    onPrimary: Colors.black, // Primary 색상 위에 올려질 텍스트/아이콘 색상
-    onSecondary: Colors.white, // Secondary 색상 위에 올려질 텍스트/아이콘 색상
-    onBackground: Colors.white, // 배경색 위에 올려질 텍스트 색상
-    onSurface: Colors.white, // 서피스 색상 위에 올려질 텍스트 색상
+    primary: Color(0xFF2196F3),
+    secondary: Color(0xFFFFD95C),
+    background: Color(0xFF121212),
+    surface: Color(0xFF1E1E1E),
+    onPrimary: Colors.black,
+    onSecondary: Colors.white,
+    onBackground: Colors.white,
+    onSurface: Colors.white,
     error: Color(0xFFF05F42),
     errorContainer: Color(0xFFF05F42),
   ),
   extensions: <ThemeExtension>[
     CustomColors(
-      primary: Color(0xFF514FFF),
-      primary60: Color(0xFF8886FF),
-      primary40: Color(0xFFB9B9FF),
-      primary20: Color(0xFFD6D6FF),
-      primary10: Color(0xFFE7E7FD),
+      primary: Color(0xFF2196F3),
+      primary60: Color(0xFF64B5F6),
+      primary40: Color(0xFFBBDEFB),
+      primary20: Color(0xFFE3F2FD),
+      primary10: Color(0xFFF1F9FF),
       secondary: Color(0xFFFFD95C),
       secondary60: Color(0xFFFDE186),
       success: Color(0xFF3FA654),
@@ -226,9 +191,8 @@ final ThemeData darkThemeGlobal = ThemeData(
       neutral60: Color(0xFF9099A0),
       neutral30: Color(0xFF434343),
       neutral0: Color(0xFF0A0A0A),
-      white: Colors.black, // 다크 모드에서는 흰색을 검은색으로
-      black: Colors.white, // 다크 모드에서는 검은색을 흰색으로
+      white: Colors.black,
+      black: Colors.white,
     ),
   ],
 );
-
