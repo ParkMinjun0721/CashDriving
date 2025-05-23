@@ -14,7 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   final String logoImageUrl =
-      "https://www.google.com/url?sa=i&url=https%3A%2F%2Fin.pinterest.com%2Fpin%2Fwhat-i-dont-know--1477812371848743%2F&psig=AOvVaw3z6sdcOXvCUb-HQUn09GWP&ust=1747969870815000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJjdk6yNto0DFQAAAAAdAAAAABAE";
+      "https://firebasestorage.googleapis.com/v0/b/party-bread.firebasestorage.app/o/1111.jpg?alt=media&token=96e301dd-ebb6-40ca-9456-2f0e0d03dd78";
 
   Future<void> _signInWithGoogle() async {
     try {
@@ -54,14 +54,14 @@ class _LoginPageState extends State<LoginPage> {
         'interactedDocs': [],
       });
     } else {
-      Navigator.pushReplacementNamed(context, '/home'); // 기존 사용자 홈 페이지로 이동
+      Navigator.pushReplacementNamed(context, '/home'); // 기존 사용자 홈 페이지로 이동 //이동
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF574142), // 배경 색상
+      backgroundColor: Color(0xFFBBDEFB), // 배경 색상
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton.icon(
               onPressed: _signInWithGoogle,
               icon: Image.asset(
-                'assets/image/google_logo.png', // PNG 로고 경로
+                'assets/image/Google_2015_logo.svg.png', // PNG 로고 경로
                 height: 24,
                 width: 24,
               ),
@@ -95,27 +95,27 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.pushNamed(context, '/sign_in_email');
-              },
-              icon: Icon(Icons.email, color: Color(0xFF5B3A30)),
-              label: Text('이메일로 로그인', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFF5E0D3),
-                foregroundColor: Color(0xFF5B3A30),
-                minimumSize: Size(300, 60),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            SizedBox(height: 12),
+            //SizedBox(height: 16),
+            // ElevatedButton.icon(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, '/sign_in_email'); //이동
+            //   },
+            //   icon: Icon(Icons.email, color: Color(0xFF5B3A30)),
+            //   label: Text('이메일로 로그인', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: Color(0xFFF5E0D3),
+            //     foregroundColor: Color(0xFF5B3A30),
+            //     minimumSize: Size(300, 60),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(10),
+            //     ),
+            //   ),
+            // ),
+            //SizedBox(height: 12),
             // 회원가입 버튼
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/signup');
+                Navigator.pushNamed(context, '/signup'); //이동
               },
               child: Text(
                 '회원가입',
