@@ -12,7 +12,20 @@
           "package_name": "com.example.cashdriving"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "632076340870-41lmou5jkbei9f4shr8bhrpuoh3o1ikt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cashdriving",
+            "certificate_hash": "8b527f50584fa243631bfd1519d6452b0937c3d7"
+          }
+        },
+        {
+          "client_id": "632076340870-ogh31jdgo1f7kia28nvbooiut9k5ahq2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBbH0554I-s-EIiREGiKFbCQfvAEFctmB0"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632076340870-ogh31jdgo1f7kia28nvbooiut9k5ahq2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "632076340870-kiugr2t4nd48g3dherabtqosrn8vkqkq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cashdriving"
+              }
+            }
+          ]
         }
       }
     }

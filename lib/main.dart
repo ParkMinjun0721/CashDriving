@@ -9,8 +9,18 @@ import 'package:tmap_ui_sdk/auth/data/init_result.dart';
 import 'package:tmap_ui_sdk/tmap_ui_sdk.dart';
 import 'package:tmap_ui_sdk/tmap_ui_sdk_manager.dart';
 import 'routes/app_routes.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart'; // flutterfire configure로 생성된 파일
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'views/login/login_view.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp( ProviderScope(child: CashDrivingApp()));
 }
 
