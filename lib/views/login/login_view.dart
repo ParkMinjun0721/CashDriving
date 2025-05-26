@@ -21,13 +21,15 @@ class _LoginViewState extends State<LoginView> {
     try {
       final user = await _authService.signInWithGoogle();
       if (user == null) return;
-
+      //데이터 항목 추가시 이쪽 수정
       final doc = await _firebaseService.getUserDoc(user.uid);
       if (!doc.exists) {
         await _firebaseService.createUser(
           uid: user.uid,
           name: user.displayName ?? 'Unknown',
           email: user.email ?? 'No Email',
+          point: 20000,
+          product: [],
         );
       }
 
