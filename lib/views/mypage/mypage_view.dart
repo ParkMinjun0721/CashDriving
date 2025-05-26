@@ -301,5 +301,3 @@ class _BottomButtons extends StatelessWidget {
     );
   }
 }
-
-lib/views/mypage/mypage_view.dart

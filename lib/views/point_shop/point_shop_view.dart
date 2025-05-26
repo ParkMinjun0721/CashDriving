@@ -1,4 +1,6 @@
 // point_shop_view.dart (with category-filtered product_provider integration)
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../theme/font.dart';
@@ -173,10 +175,25 @@ class _ProductGridSection extends ConsumerWidget {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                         ),
                         onPressed: canPurchase
-                            ? () {
+                            ? () async {
                           final success = pointController.purchase(product.point);
                           if (success) {
-                            purchaseHistory.add(PurchasedProduct(name: product.name, point: product.point));
+                            final updatedProducts = [...ref.read(purchaseHistoryProvider), PurchasedProduct(name: product.name, point: product.point)];
+                            purchaseHistory.setAll(updatedProducts);
+
+                            // ✅ Firestore 업데이트
+                            final user = FirebaseAuth.instance.currentUser;
+                            if (user != null) {
+                              await FirebaseFirestore.instance.collection('user').doc(user.uid).update({
+                                'point': ref.read(pointProvider),
+                                'product': updatedProducts.map((p) => p.toMap()).toList(),
+                              });
+                            }
+
+                            // ✅ 알림 등
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Product purchased!')),
+                            );
                           }
                         }
                             : null,

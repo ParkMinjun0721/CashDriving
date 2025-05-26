@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // ✅ 추가
 import 'package:firebase_auth/firebase_auth.dart';
+
 import '../auth/auth_service.dart';
 import '../auth/firebase_service.dart';
+import '../../viewmodels/point_provider.dart'; // ✅ provider import
+import '../../models/purchased_product.dart'; // ✅ fromMap 사용 위해 필요
 
-class LoginView extends StatefulWidget {
+class LoginView extends ConsumerStatefulWidget { // ✅ 변경
   const LoginView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  ConsumerState<LoginView> createState() => _LoginViewState(); // ✅ 변경
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginViewState extends ConsumerState<LoginView> {
   final AuthService _authService = AuthService();
   final FirebaseService _firebaseService = FirebaseService();
 
@@ -21,8 +25,9 @@ class _LoginViewState extends State<LoginView> {
     try {
       final user = await _authService.signInWithGoogle();
       if (user == null) return;
-      //데이터 항목 추가시 이쪽 수정
+
       final doc = await _firebaseService.getUserDoc(user.uid);
+
       if (!doc.exists) {
         await _firebaseService.createUser(
           uid: user.uid,
@@ -31,6 +36,20 @@ class _LoginViewState extends State<LoginView> {
           point: 20000,
           product: [],
         );
+
+        ref.read(pointProvider.notifier).set(20000);
+        ref.read(purchaseHistoryProvider.notifier).setAll([]);
+      } else {
+        final data = doc.data() as Map<String, dynamic>;
+        final point = data['point'] ?? 0;
+
+        final rawProducts = data['product'] as List<dynamic>? ?? [];
+        final products = rawProducts
+            .map((e) => PurchasedProduct.fromMap(e as Map<String, dynamic>))
+            .toList();
+
+        ref.read(pointProvider.notifier).set(point);
+        ref.read(purchaseHistoryProvider.notifier).setAll(products);
       }
 
       if (!mounted) return;
@@ -50,7 +69,6 @@ class _LoginViewState extends State<LoginView> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          // 상단 곡선 배경
           ClipPath(
             clipper: _TopWaveClipper(),
             child: Container(
@@ -64,7 +82,6 @@ class _LoginViewState extends State<LoginView> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // 로고
                   Container(
                     width: 160,
                     height: 160,
@@ -85,22 +102,19 @@ class _LoginViewState extends State<LoginView> {
                     child: ClipOval(
                       child: Image.network(
                         logoImageUrl,
-                        fit: BoxFit.cover, // 여기 핵심!
+                        fit: BoxFit.cover,
                         width: 160,
                         height: 160,
-                        errorBuilder: (context, error, stackTrace) => Icon(Icons.error),
+                        errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.error),
                       ),
                     ),
                   ),
-
-
                   const SizedBox(height: 24),
-                  const SizedBox(height: 8),
                   const Text(
                     'Enjoy Your',
                     style: TextStyle(color: Colors.black54, fontSize: 16),
                   ),
-                  // 타이틀
                   Text(
                     'CashDriving',
                     style: TextStyle(
@@ -109,10 +123,7 @@ class _LoginViewState extends State<LoginView> {
                       color: Colors.blue[800],
                     ),
                   ),
-
                   const SizedBox(height: 32),
-
-                  // 구글 로그인 버튼
                   ElevatedButton(
                     onPressed: _handleLogin,
                     style: ElevatedButton.styleFrom(
@@ -131,10 +142,10 @@ class _LoginViewState extends State<LoginView> {
                           width: 90,
                           height: 30,
                           decoration: BoxDecoration(
-                            color: Colors.white, // 흰 배경
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(70),
                           ),
-                          padding: const EdgeInsets.all(2), // 내부 여백
+                          padding: const EdgeInsets.all(2),
                           child: Image.asset(
                             'assets/images/Google_2015_logo.svg.png',
                             fit: BoxFit.contain,
@@ -143,7 +154,6 @@ class _LoginViewState extends State<LoginView> {
                       ],
                     ),
                   ),
-
                 ],
               ),
             ),
