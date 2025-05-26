@@ -1,18 +1,59 @@
 // mypage_view.dart (세련되고 푸른색 계열 디자인 적용)
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../viewmodels/custom_colors_provider.dart';
 import '../../viewmodels/point_provider.dart';
 import '../../models/purchased_product.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/custom_app_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class MyPageView extends ConsumerWidget {
+class MyPageView extends ConsumerStatefulWidget {
   const MyPageView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MyPageView> createState() => _MyPageViewState();
+}
+
+class _MyPageViewState extends ConsumerState<MyPageView> {
+  String nickname = 'Loading...';
+
+  @override
+  void initState() {
+    super.initState();
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null && user.displayName != null) {
+      nickname = user.displayName!;
+    } else {
+      nickname = 'Anonymous';
+    }
+  }
+
+  void _changeNickname(BuildContext context) async {
+    final controller = TextEditingController(text: nickname);
+    final newName = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Edit Nickname'),
+        content: TextField(
+          controller: controller,
+          decoration: const InputDecoration(labelText: 'New Nickname'),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          ElevatedButton(onPressed: () => Navigator.pop(context, controller.text), child: const Text('Save')),
+        ],
+      ),
+    );
+
+    if (newName != null && newName.isNotEmpty) {
+      setState(() => nickname = newName);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final customColors = ref.watch(customColorsProvider);
     final point = ref.watch(pointProvider);
 
@@ -24,7 +65,7 @@ class MyPageView extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const _ProfileSection(),
+            _ProfileSection(nickname: nickname, onEdit: () => _changeNickname(context)),
             const SizedBox(height: 24),
             _EcoDrivingScore(score: 92),
             const SizedBox(height: 24),
@@ -40,6 +81,8 @@ class MyPageView extends ConsumerWidget {
     );
   }
 }
+
+
 
 class _PurchasedItemsSection extends ConsumerStatefulWidget {
   const _PurchasedItemsSection();
@@ -90,7 +133,10 @@ class _PurchasedItemsSectionState extends ConsumerState<_PurchasedItemsSection> 
 }
 
 class _ProfileSection extends StatelessWidget {
-  const _ProfileSection();
+  final String nickname;
+  final VoidCallback onEdit;
+
+  const _ProfileSection({required this.nickname, required this.onEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -105,18 +151,19 @@ class _ProfileSection extends StatelessWidget {
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text('Kim Yechan', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              SizedBox(height: 4),
-              Text('Safe Driving Master', style: TextStyle(color: Colors.grey)),
+            children: [
+              Text(nickname, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4),
+              const Text('Safe Driving Master', style: TextStyle(color: Colors.grey)),
             ],
           ),
         ),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.edit, color: Color(0xFF2196F3))),
+        IconButton(onPressed: onEdit, icon: const Icon(Icons.edit, color: Color(0xFF2196F3))),
       ],
     );
   }
 }
+
 
 class _EcoDrivingScore extends StatelessWidget {
   final int score;
@@ -199,6 +246,26 @@ class _BadgeSection extends StatelessWidget {
 class _BottomButtons extends StatelessWidget {
   const _BottomButtons();
 
+  void _logout(BuildContext context) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
+          ElevatedButton(onPressed: () => Navigator.pop(context, true), child: const Text('Logout')),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      await FirebaseAuth.instance.signOut();
+      // 로그인 페이지로 이동 (기존 stack 제거)
+      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -226,11 +293,13 @@ class _BottomButtons extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
-            onPressed: () {},
-            child: const Text('Edit Profile'),
+            onPressed: () => _logout(context),
+            child: const Text('Logout'),
           ),
         )
       ],
     );
   }
 }
+
+lib/views/mypage/mypage_view.dart
