@@ -1,3 +1,7 @@
+// 요약: GoRouter 라우팅 테이블을 정의합니다.
+// - 앱 전반의 경로 상수를 제공합니다.
+// - 각 라우트에 대응하는 화면 위젯을 매핑합니다.
+// - 초기 진입 경로와 라우팅 흐름을 설정합니다.
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

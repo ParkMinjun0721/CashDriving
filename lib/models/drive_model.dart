@@ -1,3 +1,7 @@
+// 요약: 주행 요청 데이터와 상태를 담는 모델입니다.
+// - 출발지/도착지 좌표와 이름을 저장합니다.
+// - 주행 모드(에코/일반) 선택 값을 보관합니다.
+// - 경로 요청 시 필요한 데이터 구조를 제공합니다.
 import 'package:flutter/foundation.dart';
 import 'package:tmap_ui_sdk/route/data/planning_option.dart';
 import 'package:tmap_ui_sdk/route/data/route_point.dart';

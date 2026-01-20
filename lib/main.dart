@@ -1,3 +1,7 @@
+// 요약: 앱 엔트리로 Firebase 초기화 후 최상위 위젯을 실행합니다.
+// - Flutter 바인딩을 초기화하고 `Firebase.initializeApp`를 호출합니다.
+// - Riverpod `ProviderScope`로 전역 상태 관리를 시작합니다.
+// - 앱 루트 위젯(`CashDrivingTmapApp`)을 실행합니다.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

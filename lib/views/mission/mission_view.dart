@@ -1,3 +1,7 @@
+// 요약: 에코 미션 목록과 진행 상태를 보여줍니다.
+// - 미션 데이터를 목록 형태로 표시하는 UI를 제공합니다.
+// - 선택/완료 등 상태 확장을 고려한 구조입니다.
+// - 추가 로직은 ViewModel과 연동됩니다.
 // mission_view.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

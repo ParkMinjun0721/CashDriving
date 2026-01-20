@@ -1,3 +1,8 @@
+// 요약: 주행 상태를 수집하고 에코 점수를 계산하는 화면입니다.
+// - Tmap 주행/가이드/마커 스트림을 구독합니다.
+// - 급가속/급감속/안정 주행을 카운트해 점수를 산출합니다.
+// - 도착 시 주행 요약 데이터를 만들고 결과 화면으로 이동합니다.
+// - 주행 통계(거리, 시간, 평균 속도)를 누적 계산합니다.
 import 'dart:async';
 import 'package:example_tmap_navi/pages/drive/trip_summary_view.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,7 @@
+// 요약: 포인트 샵 UI와 구매 상태 관리를 담당합니다.
+// - 카테고리 탭(쿠폰/굿즈/교환)을 제공합니다.
+// - 상품 목록을 그리드로 노출하고 구매 가능 여부를 계산합니다.
+// - 포인트 차감 및 구매 이력 반영은 Provider로 처리합니다.
 // point_shop_view.dart
 // Updated point_shop_view.dart with a cleaner and more modern design in blue theme
 import 'package:flutter/material.dart';

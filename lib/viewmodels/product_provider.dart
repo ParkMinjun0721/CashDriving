@@ -1,3 +1,7 @@
+// 요약: 상품 목록과 구매 내역을 관리합니다.
+// - 상품 리스트를 Provider로 노출합니다.
+// - 구매 처리 시 이력과 포인트를 갱신합니다.
+// - UI에서 카테고리별 필터링에 사용됩니다.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/product.dart';
 

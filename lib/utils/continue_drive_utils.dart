@@ -1,3 +1,7 @@
+// 요약: 이전 주행 이어하기 안내를 처리하는 유틸입니다.
+// - SDK에서 제공하는 이전 주행 정보를 확인합니다.
+// - 사용자에게 이어하기 여부를 다이얼로그로 안내합니다.
+// - 승인/거절에 따라 콜백을 실행합니다.
 import 'package:flutter/material.dart';
 import 'package:example_tmap_navi/widgets/simple_dialog.dart';
 

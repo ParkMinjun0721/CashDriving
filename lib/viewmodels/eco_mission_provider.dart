@@ -1,3 +1,7 @@
+// 요약: 에코 미션 데이터를 관리하는 상태입니다.
+// - 미션 리스트와 선택 상태를 보관합니다.
+// - UI에서 탭/필터링에 활용됩니다.
+// - 향후 원격 데이터 동기화에 확장 가능합니다.
 // lib/viewmodels/eco_mission_provider.dart
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';

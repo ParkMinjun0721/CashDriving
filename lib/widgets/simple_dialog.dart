@@ -1,3 +1,7 @@
+// 요약: 공용 확인/안내 다이얼로그를 제공합니다.
+// - 제목/버튼 텍스트를 받아 재사용 가능한 UI를 구성합니다.
+// - 권한 안내와 같은 UX 흐름에서 사용됩니다.
+// - 외부 탭을 막거나 허용하는 옵션을 포함합니다.
 import 'package:flutter/material.dart';
 
 Future<T> simpleDialog<T>({

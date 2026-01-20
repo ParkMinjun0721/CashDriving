@@ -1,3 +1,7 @@
+// 요약: 주행 화면의 백업/레거시 구현을 보관합니다.
+// - 이전 버전 주행 로직을 참고용으로 유지합니다.
+// - 현재 구현과 비교하거나 복구가 필요할 때 사용합니다.
+// - 실행 경로에는 포함되지 않습니다.
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';

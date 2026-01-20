@@ -1,3 +1,7 @@
+// 요약: 주행 요약 모델과 결과 화면을 제공합니다.
+// - `TripSummary` 모델로 주행 결과 데이터를 구조화합니다.
+// - 거리/시간/에코 점수/급가감속 횟수를 시각화합니다.
+// - 홈으로 돌아가는 네비게이션 동작을 포함합니다.
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../common/app_routes.dart';

@@ -1,3 +1,7 @@
+// 요약: 차량 설정(승용/트럭) 모델을 정의합니다.
+// - 차량 타입별 설정 값을 구조화합니다.
+// - SDK 설정 호출 시 필요한 파라미터를 제공합니다.
+// - 차량 구성 옵션 확장에 대비한 모델입니다.
 // lib/models/car_config_model.dart
 
 import 'package:flutter/foundation.dart';              // ← 추가

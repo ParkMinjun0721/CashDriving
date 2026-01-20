@@ -1,3 +1,8 @@
+// 요약: 출발/도착지를 지도에서 선택하는 화면입니다.
+// - 현재 위치를 기준으로 지도를 초기화합니다.
+// - 탭한 위치를 마커로 표시하고 주소를 조회합니다.
+// - 출발/도착 선택에 따라 주행 모델에 좌표를 저장합니다.
+// - 선택 완료 후 다음 단계 화면으로 이동합니다.
 import 'package:example_tmap_navi/pages/location/placename_getter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,3 +1,7 @@
+// 요약: Google 로그인과 사용자 데이터 초기화를 담당합니다.
+// - Google Sign-In으로 인증한 뒤 Firebase 사용자 문서를 조회합니다.
+// - 신규 사용자라면 기본 포인트/구매 이력을 생성합니다.
+// - 로그인 성공 시 메인 화면으로 이동합니다.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // ✅ 추가
 import 'package:firebase_auth/firebase_auth.dart';

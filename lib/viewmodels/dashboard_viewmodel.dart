@@ -1,3 +1,7 @@
+// 요약: 대시보드 표시용 데이터를 생성/가공합니다.
+// - 차트와 카드에 필요한 데이터 포맷을 제공합니다.
+// - UI에서 직접 계산하지 않도록 분리합니다.
+// - 더미/샘플 데이터를 초기값으로 제공할 수 있습니다.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../models/dashboard_data_model.dart';

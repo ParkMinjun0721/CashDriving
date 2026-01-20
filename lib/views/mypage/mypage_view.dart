@@ -1,3 +1,7 @@
+// 요약: 사용자 정보와 설정을 보여주는 마이페이지입니다.
+// - 프로필/설정 항목 UI를 구성합니다.
+// - 로그아웃 등 계정 기능과 연결될 수 있습니다.
+// - 현재는 기본 레이아웃 중심입니다.
 // mypage_view.dart (세련되고 푸른색 계열 디자인 적용)
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

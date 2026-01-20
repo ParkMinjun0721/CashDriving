@@ -1,3 +1,7 @@
+// 요약: 주행 모델의 백업/레거시 정의입니다.
+// - 이전 버전 주행 데이터 구조를 보관합니다.
+// - 현재 모델과 비교하거나 복구 시 참고합니다.
+// - 실제 런타임 경로에는 포함되지 않습니다.
 import 'package:tmap_ui_sdk/route/data/planning_option.dart';
 import 'package:tmap_ui_sdk/route/data/route_point.dart';
 import 'package:tmap_ui_sdk/route/data/route_request_data.dart';

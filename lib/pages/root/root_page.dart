@@ -1,3 +1,8 @@
+// 요약: SDK 상태 스트림과 초기화 흐름을 관리하는 루트 화면입니다.
+// - SDK 상태 스트림을 구독해 이어주행 안내를 처리합니다.
+// - 권한 확보 후 SDK 초기화를 수행하고 상태를 표시합니다.
+// - 마커/차량 설정 등 SDK 설정용 메서드를 제공합니다.
+// - 종료/정지 등 SDK 제어 기능을 포함합니다.
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

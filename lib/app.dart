@@ -1,3 +1,7 @@
+// 요약: Provider 기반 레거시 앱 엔트리입니다.
+// - `MultiProvider`로 모델을 주입합니다.
+// - `MaterialApp.router`에 기본 테마와 라우터를 연결합니다.
+// - 현재는 Riverpod 기반 구조와 병행되는 레거시 경로입니다.
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:example_tmap_navi/common/app_routes.dart';

@@ -1,3 +1,7 @@
+// 요약: Tmap UI SDK 초기화와 권한/차량 설정을 묶습니다.
+// - 위치 권한 획득 후 SDK 초기화를 진행합니다.
+// - 초기화 성공 시 상태를 갱신하고 차량 설정을 적용합니다.
+// - 실패/예외 상황에서 토스트와 로그를 남깁니다.
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

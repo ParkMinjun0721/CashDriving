@@ -1,3 +1,7 @@
+// 요약: 플랫폼 채널로 내비게이션 시작을 호출하는 화면입니다.
+// - MethodChannel을 통해 네이티브 내비게이션을 트리거합니다.
+// - 단순 샘플 UI로 호출 결과를 로그로 확인합니다.
+// - 추가 기능 확장을 위한 베이스 화면입니다.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';

@@ -1,3 +1,7 @@
+// 요약: 라이트/다크 테마와 커스텀 컬러를 정의합니다.
+// - Material 테마와 확장 색상을 구성합니다.
+// - 앱 전반의 색상 토큰을 한 곳에서 관리합니다.
+// - 테마 전환 시 사용할 스타일을 제공합니다.
 import "package:flutter/material.dart";
 
 class CustomColors extends ThemeExtension<CustomColors> {

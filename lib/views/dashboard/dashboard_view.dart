@@ -1,3 +1,7 @@
+// 요약: 주행 통계를 시각화하는 대시보드 화면입니다.
+// - 에코 스코어 추이와 탄소 절감 정보를 표시합니다.
+// - 랭킹/효율 등 카드형 위젯으로 데이터를 구성합니다.
+// - 탭 전환으로 기간별 데이터를 전환합니다.
 // dashboard_view.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

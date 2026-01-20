@@ -1,3 +1,7 @@
+// 요약: 홈 화면으로 주행 시작과 에코 점수 요약을 제공합니다.
+// - Tmap SDK 초기화 후 주행 옵션을 노출합니다.
+// - 에코 점수와 포인트 정보를 카드 형태로 표시합니다.
+// - 하단 탭 네비게이션으로 다른 화면으로 이동합니다.
 // main_view.dart (Modified to replace 'Start Driving' with buttons on tap and increased button size)
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

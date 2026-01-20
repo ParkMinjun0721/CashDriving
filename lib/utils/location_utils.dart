@@ -1,3 +1,7 @@
+// 요약: 권한 요청과 현재 위치 조회를 제공하는 위치 유틸입니다.
+// - 권한 상태를 확인하고 요청 흐름을 제어합니다.
+// - 권한 실패 시 설정 이동 안내 다이얼로그를 표시합니다.
+// - Geolocator로 현재 위치를 고정밀로 조회합니다.
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';          // ← 추가

@@ -1,3 +1,7 @@
+// 요약: 공용 라우트 상수와 GoRouter 설정을 제공합니다.
+// - 라우트 문자열 상수를 중앙에서 관리합니다.
+// - 로그인/홈/대시보드/주행 등 화면 전환을 구성합니다.
+// - `TripSummary` 등 라우트 extra 전달을 처리합니다.
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
