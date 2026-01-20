@@ -31,7 +31,7 @@ Future<void> initializeTmapSdk(BuildContext context, WidgetRef ref) async {
       log("✅ 위치 권한 허용됨");
 
       final authData = AuthData(
-        clientApiKey: "ZL6ehYGTGJ96R4pUEzb5J8URphaOWjHP67Afpm3q",
+        clientApiKey: "0RgF4hsgFU1DPMgFCd4PB6755czZQ1gJ5gQfx9ep",
         userKey: "USER_KEY",
         clientServiceName: "CashDriving",
         clientID: "YOUR_CLIENT_ID",

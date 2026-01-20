@@ -117,7 +117,7 @@ class _DrivingStartSection extends ConsumerWidget {
                   ref.read(showDriveOptionsProvider.notifier).state = false;
                   context.go('/root/location/start');
                 },
-                child: const Text('Choose destination'),
+                child: const Text('Choose Destination'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   foregroundColor: Colors.blue,
